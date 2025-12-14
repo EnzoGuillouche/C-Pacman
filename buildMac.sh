@@ -34,7 +34,6 @@ gcc -o $DIR/$PROGRAM Src/main.c `sdl2-config --cflags --libs` -std=c99 -Wall -We
 if [ $? -eq 0 ]; then
     echo "Compilation complete. Executable is located at $DIR/$PROGRAM"
     sleep 1
-    clear
     echo "Running $PROGRAM..."
     ./$DIR/$PROGRAM
 else

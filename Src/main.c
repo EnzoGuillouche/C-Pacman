@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <SDL.h>
+
+#include "display.h"
 
 int main(void)
 {
-    SDL_Window* pwindow = SDL_CreateWindow("PacSDL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, 0);
+    SDL_Window* pwindow = CreateWindow("PacSDL", 800, 600);
+    SDL_Surface* psurface = SDL_GetWindowSurface(pwindow);
 
     bool running = true;
     while (running)
@@ -18,9 +20,11 @@ int main(void)
                 break;
             }
 
-            SDL_Surface* psurface = SDL_GetWindowSurface(pwindow);
-            SDL_FillRect(psurface, NULL, 0xFF0000);
-            SDL_UpdateWindowSurface(pwindow);
+            r = 0xFF;
+            g = 0x00;
+            b = 0x00;
+            UpdateViewport(psurface, 50, 50, r, g, b);
+            DisplayViewport(pwindow);
         }
     }
 
