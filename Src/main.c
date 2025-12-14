@@ -13,6 +13,7 @@ int main(void)
     SDL_Surface* psurface = SDL_GetWindowSurface(pwindow);
 
     Player player = { .x_pos = 100, .y_pos = 100 };
+    PlayerSetSprite(&player, 0); // initial sprite
 
     bool running = true;
     while (running)
@@ -31,16 +32,20 @@ int main(void)
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case SDLK_UP:
-                        GoToDirection(&player, 0, -1);
+                        PlayerGoToDirection(&player, 0, -1);
+                        PlayerSetSprite(&player, 2);
                         break;
                     case SDLK_DOWN:
-                        GoToDirection(&player, 0, 1);
+                        PlayerGoToDirection(&player, 0, 1);
+                        PlayerSetSprite(&player, 3);
                         break;
                     case SDLK_LEFT:
-                        GoToDirection(&player, -1, 0);
+                        PlayerGoToDirection(&player, -1, 0);
+                        PlayerSetSprite(&player, 1);
                         break;
                     case SDLK_RIGHT:
-                        GoToDirection(&player, 1, 0);
+                        PlayerGoToDirection(&player, 1, 0);
+                        PlayerSetSprite(&player, 0);
                         break;
                 }
             }
@@ -49,13 +54,8 @@ int main(void)
         // Display
         ClearViewPort(psurface);
 
-        MovePlayer(&player);
-
-        const char* psprite = LoadSprite("Bin/test_sprite.txt", 0);
-        if (psprite) {
-            PlaceSpriteOnViewport(psurface, psprite, player.x_pos, player.y_pos);
-            free((void*)psprite);
-        }
+        PlayerMove(&player);
+        PlayerDisplay(&player, psurface);
 
         DisplayViewport(pwindow);
         SDL_Delay(3); // otherwise CPU goes brrr
