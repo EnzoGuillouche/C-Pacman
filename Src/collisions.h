@@ -7,35 +7,38 @@
 #define COLLISION_THRESHOLD 3
 #define WALL_BOUNDARIES 3
 
-bool CheckCollisionLeft(Player* player, Maze* maze) {
-    return player->x_pos*PIXEL_SIZE > maze->x_pos*PIXEL_SIZE + WALL_BOUNDARIES*PIXEL_SIZE + COLLISION_THRESHOLD*PIXEL_SIZE;
+
+bool CheckCollisionLeft(MazeBoundaries* maze_boundaries) {
+    return strcmp(maze_boundaries->pboundaries[maze_boundaries->width * maze_boundaries->pacman_pos[1] + maze_boundaries->pacman_pos[0] - 1], "1") != 0;
 }
 
-bool CheckCollisionRight(Player* player, Maze* maze) {
-    return player->x_pos*PIXEL_SIZE + PLAYER_SPRITE_WIDTH*PIXEL_SIZE + WALL_BOUNDARIES*PIXEL_SIZE < maze->x_pos*PIXEL_SIZE + MAZE_SPRITE_WIDTH*PIXEL_SIZE - COLLISION_THRESHOLD*PIXEL_SIZE;
+bool CheckCollisionRight(MazeBoundaries* maze_boundaries) {
+    return strcmp(maze_boundaries->pboundaries[maze_boundaries->width * maze_boundaries->pacman_pos[1] + maze_boundaries->pacman_pos[0] + 1], "1") != 0;
 }
 
-bool CheckCollisionUp(Player* player, Maze* maze) {
-    return player->y_pos*PIXEL_SIZE > maze->y_pos*PIXEL_SIZE + WALL_BOUNDARIES*PIXEL_SIZE + COLLISION_THRESHOLD*PIXEL_SIZE;
+bool CheckCollisionUp(MazeBoundaries* maze_boundaries) {
+    return strcmp(maze_boundaries->pboundaries[maze_boundaries->width * (maze_boundaries->pacman_pos[1]-1) + maze_boundaries->pacman_pos[0]], "1") != 0;
 }
 
-bool CheckCollisionDown(Player* player, Maze* maze) {
-    return player->y_pos*PIXEL_SIZE + PLAYER_SPRITE_HEIGHT*PIXEL_SIZE + WALL_BOUNDARIES*PIXEL_SIZE < maze->y_pos*PIXEL_SIZE + MAZE_SPRITE_HEIGHT*PIXEL_SIZE - COLLISION_THRESHOLD*PIXEL_SIZE;
+bool CheckCollisionDown(MazeBoundaries* maze_boundaries) {
+    return strcmp(maze_boundaries->pboundaries[maze_boundaries->width * (maze_boundaries->pacman_pos[1]+1) + maze_boundaries->pacman_pos[0]], "1") != 0;
 }
 
-bool CheckCollisions(Player* player, Maze* maze) {
+bool CheckCollisions(Player* player, MazeBoundaries* maze_boundaries) {
+    
     if (player->x_velocity > 0) {
         // Moving right
-        return CheckCollisionRight(player, maze);
-    } else if (player->x_velocity < 0) {
+        return CheckCollisionRight(maze_boundaries);
+    }
+    if (player->x_velocity < 0) {
         // Moving left
-        return CheckCollisionLeft(player, maze);
+        return CheckCollisionLeft(maze_boundaries);
     } else if (player->y_velocity > 0) {
         // Moving down
-        return CheckCollisionDown(player, maze);
+        return CheckCollisionDown(maze_boundaries);
     } else if (player->y_velocity < 0) {
         // Moving up
-        return CheckCollisionUp(player, maze);
+        return CheckCollisionUp(maze_boundaries);
     }
     return false; // No movement
 }

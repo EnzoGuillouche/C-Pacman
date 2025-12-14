@@ -6,10 +6,12 @@
 #include "sprite.h"
 
 typedef struct maze_boundaries {
-    char* pboundaries;
+    const char* pboundaries[456];
     int width;
     int height;
-    int ppacman_pos[2];
+    int pacman_pos[2];
+    int pacman_steps;
+    int movement_delay;
 } MazeBoundaries;
 
 typedef struct maze {

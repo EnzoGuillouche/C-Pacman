@@ -24,7 +24,7 @@ int main(void)
     MazeBoundaries maze_boundaries = {
         .width = 19,
         .height = 24,
-        .ppacman_pos = {10, 19},
+        .pacman_pos = {9, 18},
         .pboundaries = {
             "1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1",
             "1","0","0","0","0","0","0","0","0","1","0","0","0","0","0","0","0","0","1",
@@ -50,11 +50,12 @@ int main(void)
             "1","0","1","1","1","1","1","1","0","1","0","1","1","1","1","1","1","0","1",
             "1","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","0","1",
             "1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1","1",
-        }
-    }
+        },
+        .movement_delay = 12,
+    };
 
     Player player = { 
-        .x_pos = maze.x_pos+(MAZE_SPRITE_WIDTH/2)-(PLAYER_SPRITE_WIDTH/2), 
+        .x_pos = maze.x_pos+(MAZE_SPRITE_WIDTH/2)-(PLAYER_SPRITE_WIDTH/2),
         .y_pos = maze.y_pos+MAZE_SPRITE_HEIGHT-(MAZE_SPRITE_HEIGHT/4)-(PLAYER_SPRITE_HEIGHT/2)+2,
     };
     PlayerSetSprite(&player, 0); // initial sprite
@@ -76,18 +77,30 @@ int main(void)
             if (e.type == SDL_KEYDOWN) {
                 switch (e.key.keysym.sym) {
                     case SDLK_UP:
+                        if (player.y_velocity == 1) 
+                            break;
+                        maze_boundaries.pacman_steps = 0;
                         PlayerGoToDirection(&player, 0, -1);
                         PlayerSetSprite(&player, 2);
                         break;
                     case SDLK_DOWN:
+                        if (player.y_velocity == -1) 
+                            break;
+                        maze_boundaries.pacman_steps = 0;
                         PlayerGoToDirection(&player, 0, 1);
                         PlayerSetSprite(&player, 3);
                         break;
                     case SDLK_LEFT:
+                        if (player.x_velocity == -1) 
+                            break;
+                        maze_boundaries.pacman_steps = 0;
                         PlayerGoToDirection(&player, -1, 0);
                         PlayerSetSprite(&player, 1);
                         break;
                     case SDLK_RIGHT:
+                        if (player.x_velocity == -1) 
+                            break;
+                        maze_boundaries.pacman_steps = 0;
                         PlayerGoToDirection(&player, 1, 0);
                         PlayerSetSprite(&player, 0);
                         break;
@@ -100,8 +113,8 @@ int main(void)
 
         MazeDisplay(&maze, psurface);
         
-        if (CheckCollisions(&player, &maze)) {
-            PlayerMove(&player);
+        if (CheckCollisions(&player, &maze_boundaries)) {
+            PlayerMove(&player, &maze_boundaries);
         }
         PlayerDisplay(&player, psurface);
 
