@@ -2,19 +2,25 @@
 
 #include <SDL.h>
 
-Uint8 r,g,b;
-SDL_Rect pixel;
-int pixel_x = 50;
-int pixel_y = 50;
+#include "sprite.h"
 
+SDL_Rect pixel;
 
 SDL_Window* CreateWindow(const char* title, int width, int height) {
     return SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
 }
 
-void UpdateViewport(SDL_Surface *psurface, int x, int y, Uint8 r, Uint8 g, Uint8 b) {
+
+void FillViewPort(SDL_Surface *psurface, Uint32 color) {
+    SDL_FillRect(psurface, NULL, color);
+}
+
+void ClearViewPort(SDL_Surface *psurface) {
+    FillViewPort(psurface, 0x000000);
+}
+
+void PlacePixelOnViewport(SDL_Surface *psurface, int x, int y, Uint32 color) {
     pixel = (SDL_Rect){ x,y,1,1 };
-    Uint32 color = SDL_MapRGB(psurface->format, r, g, b);
     SDL_FillRect(psurface, &pixel, color);
 }
 

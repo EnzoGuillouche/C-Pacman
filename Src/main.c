@@ -20,10 +20,15 @@ int main(void)
                 break;
             }
 
-            r = 0xFF;
-            g = 0x00;
-            b = 0x00;
-            UpdateViewport(psurface, 50, 50, r, g, b);
+            // PlacePixelOnViewport(psurface, 50, 50, 0xFF0000);
+
+            ClearViewPort(psurface);
+            const char* psprite = LoadSprite("Bin/test_sprite.txt");
+            if (psprite) {
+                Uint32 color = GetColorFromSprite(psprite, 2); // just to test
+                FillViewPort(psurface, color);
+                free((void*)psprite);
+            }
             DisplayViewport(pwindow);
         }
     }
