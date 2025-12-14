@@ -4,6 +4,7 @@
 
 #include "player.h"
 #include "maze.h"
+#include "collisions.h"
 
 #define SCREEN_WIDTH MAZE_SPRITE_WIDTH*PIXEL_SIZE
 #define SCREEN_HEIGHT MAZE_SPRITE_HEIGHT*PIXEL_SIZE
@@ -67,7 +68,9 @@ int main(void)
 
         MazeDisplay(&maze, psurface);
         
-        PlayerMove(&player);
+        if (CheckCollisions(&player, &maze)) {
+            PlayerMove(&player);
+        }
         PlayerDisplay(&player, psurface);
 
         DisplayViewport(pwindow);

@@ -8,8 +8,6 @@
 typedef struct maze {
     int x_pos;
     int y_pos;
-    int width;
-    int height;
     const char* psprite;
 } Maze;
 

@@ -6,7 +6,7 @@
 
 SDL_Rect pixel;
 Uint32 color;
-#define PIXEL_SIZE 2
+#define PIXEL_SIZE 3
 
 SDL_Window* CreateWindow(const char* title, int width, int height) {
     return SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
