@@ -8,33 +8,29 @@
 #define COLOR_LENGTH 8
 #define SPRITE_HEIGHT 12
 #define SPRITE_WIDTH 12
+#define SPRITE_SIZE SPRITE_HEIGHT * SPRITE_WIDTH * (COLOR_LENGTH+1)
 
-const char* LoadSprite(const char* filepath) {
-    FILE *pfile;
-    char *pbuffer;
-    int filelen;
-
-    pfile = fopen(filepath, "rb");
+const char* LoadSprite(const char* filepath, int whichSprite) {
+    FILE *pfile = fopen(filepath, "r");
     if (!pfile) {
         perror("Failed to open file");
         return NULL;
     }
 
-    fseek(pfile, 0, SEEK_END);
-    filelen = ftell(pfile);
-    rewind(pfile);
+    fseek(pfile, (SPRITE_SIZE+2)*whichSprite, SEEK_SET); // Move to the right sprite
 
-    pbuffer = (char *)malloc(filelen + 1);
+    char *pbuffer = malloc(SPRITE_SIZE);
     if (!pbuffer) {
         perror("Memory allocation failed");
         fclose(pfile);
+        return NULL;
     }
 
-    for(int i = 0; i < filelen; i++) {
+    for(int i = 0; i < SPRITE_SIZE; i++) {
         fread(pbuffer + i, 1, 1, pfile);
     }
 
-    printf("Sprite loaded from %s (%d bytes)\n", filepath, filelen);
+    printf("Loaded sprite %d\n", whichSprite);
 
     fclose(pfile);
 
@@ -52,9 +48,7 @@ Uint32 GetColorFromSprite(const char* pbuffer, int indexOfColor) {
     if (*pend != '\0') {
         fprintf(stderr, "Invalid color: %s\n", colorStr);
     }
-
-    printf("Color: 0x%06X\n", color); // anyway, we have 0x00000 as default if we have error
-
+    // anyway, we have 0x00000 as default if we have error
 
     return color;
 }

@@ -5,6 +5,7 @@
 #include "sprite.h"
 
 SDL_Rect pixel;
+Uint32 color;
 
 SDL_Window* CreateWindow(const char* title, int width, int height) {
     return SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
@@ -27,7 +28,7 @@ void PlacePixelOnViewport(SDL_Surface *psurface, int x, int y, Uint32 color) {
 void PlaceSpriteOnViewport(SDL_Surface *psurface, const char* psprite, int x, int y) {
     for (int row = 0; row < SPRITE_HEIGHT; row++) {
         for (int col = 0; col < SPRITE_WIDTH; col++) {
-            Uint32 color = GetColorFromSprite(psprite, (SPRITE_WIDTH*row)+col);
+            color = GetColorFromSprite(psprite, (SPRITE_WIDTH*row)+col);
             PlacePixelOnViewport(psurface, x + col, y + row, color);
         }
     }

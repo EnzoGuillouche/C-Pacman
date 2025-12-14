@@ -23,11 +23,15 @@ int main(void)
             // PlacePixelOnViewport(psurface, 50, 50, 0xFF0000);
 
             ClearViewPort(psurface);
-            const char* psprite = LoadSprite("Bin/test_sprite.txt");
-            if (psprite) {
-                PlaceSpriteOnViewport(psurface, psprite, 100, 100);
-                free((void*)psprite);
+            for (int i = 0; i < 4; i++)
+            {
+                const char* psprite = LoadSprite("Bin/test_sprite.txt", i);
+                if (psprite) {
+                    PlaceSpriteOnViewport(psurface, psprite, 100 + 12*i, 100);
+                    free((void*)psprite);
+                }
             }
+            
             DisplayViewport(pwindow);
         }
     }
