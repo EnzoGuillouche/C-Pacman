@@ -6,6 +6,8 @@
 #include <SDL.h>
 
 #define COLOR_LENGTH 8
+#define SPRITE_HEIGHT 12
+#define SPRITE_WIDTH 12
 
 const char* LoadSprite(const char* filepath) {
     FILE *pfile;
@@ -31,6 +33,8 @@ const char* LoadSprite(const char* filepath) {
     for(int i = 0; i < filelen; i++) {
         fread(pbuffer + i, 1, 1, pfile);
     }
+
+    printf("Sprite loaded from %s (%d bytes)\n", filepath, filelen);
 
     fclose(pfile);
 

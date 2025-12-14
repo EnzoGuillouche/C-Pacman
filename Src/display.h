@@ -24,6 +24,15 @@ void PlacePixelOnViewport(SDL_Surface *psurface, int x, int y, Uint32 color) {
     SDL_FillRect(psurface, &pixel, color);
 }
 
+void PlaceSpriteOnViewport(SDL_Surface *psurface, const char* psprite, int x, int y) {
+    for (int row = 0; row < SPRITE_HEIGHT; row++) {
+        for (int col = 0; col < SPRITE_WIDTH; col++) {
+            Uint32 color = GetColorFromSprite(psprite, (SPRITE_WIDTH*row)+col);
+            PlacePixelOnViewport(psurface, x + col, y + row, color);
+        }
+    }
+}
+
 void DisplayViewport(SDL_Window *pwindow) {
     SDL_UpdateWindowSurface(pwindow);
 }

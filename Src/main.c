@@ -25,8 +25,7 @@ int main(void)
             ClearViewPort(psurface);
             const char* psprite = LoadSprite("Bin/test_sprite.txt");
             if (psprite) {
-                Uint32 color = GetColorFromSprite(psprite, 2); // just to test
-                FillViewPort(psurface, color);
+                PlaceSpriteOnViewport(psurface, psprite, 100, 100);
                 free((void*)psprite);
             }
             DisplayViewport(pwindow);
