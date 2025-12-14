@@ -6,6 +6,7 @@
 
 SDL_Rect pixel;
 Uint32 color;
+#define PIXEL_SIZE 2
 
 SDL_Window* CreateWindow(const char* title, int width, int height) {
     return SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
@@ -21,7 +22,7 @@ void ClearViewPort(SDL_Surface *psurface) {
 }
 
 void PlacePixelOnViewport(SDL_Surface *psurface, int x, int y, Uint32 color) {
-    pixel = (SDL_Rect){ x,y,1,1 };
+    pixel = (SDL_Rect){ x*PIXEL_SIZE,y*PIXEL_SIZE,PIXEL_SIZE,PIXEL_SIZE };
     SDL_FillRect(psurface, &pixel, color);
 }
 

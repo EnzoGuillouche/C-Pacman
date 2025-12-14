@@ -58,10 +58,10 @@ int main(void)
         // Display
         ClearViewPort(psurface);
 
+        MazeDisplay(&maze, psurface);
+        
         PlayerMove(&player);
         PlayerDisplay(&player, psurface);
-
-        MazeDisplay(&maze, psurface);
 
         DisplayViewport(pwindow);
         SDL_Delay(3); // otherwise CPU goes brrr
