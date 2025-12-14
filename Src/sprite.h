@@ -6,27 +6,28 @@
 #include <SDL.h>
 
 #define COLOR_LENGTH 8
-#define SPRITE_HEIGHT 12
-#define SPRITE_WIDTH 12
-#define SPRITE_SIZE SPRITE_HEIGHT * SPRITE_WIDTH * (COLOR_LENGTH+1)
+#define PLAYER_SPRITE_HEIGHT 12
+#define PLAYER_SPRITE_WIDTH 12
+#define MAZE_SPRITE_HEIGHT 248
+#define MAZE_SPRITE_WIDTH 224
 
-const char* LoadSprite(const char* filepath, int whichSprite) {
+const char* LoadSprite(const char* filepath, int HEIGHT, int WIDTH, int spriteIndex) {
     FILE *pfile = fopen(filepath, "r");
     if (!pfile) {
         perror("Failed to open file");
         return NULL;
     }
 
-    fseek(pfile, (SPRITE_SIZE+2)*whichSprite, SEEK_SET); // Move to the right sprite
+    fseek(pfile, ((HEIGHT*WIDTH*(COLOR_LENGTH+1))+2)*spriteIndex, SEEK_SET); // Move to the right sprite
 
-    char *pbuffer = malloc(SPRITE_SIZE);
+    char *pbuffer = malloc((HEIGHT*WIDTH*(COLOR_LENGTH+1)));
     if (!pbuffer) {
         perror("Memory allocation failed");
         fclose(pfile);
         return NULL;
     }
 
-    for(int i = 0; i < SPRITE_SIZE; i++) {
+    for(int i = 0; i < (HEIGHT*WIDTH*(COLOR_LENGTH+1)); i++) {
         fread(pbuffer + i, 1, 1, pfile);
     }
 

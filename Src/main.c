@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <SDL.h>
 
-#include "display.h"
 #include "player.h"
+#include "maze.h"
 
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
@@ -14,6 +15,9 @@ int main(void)
 
     Player player = { .x_pos = 100, .y_pos = 100 };
     PlayerSetSprite(&player, 0); // initial sprite
+
+    Maze maze = { .x_pos = 50, .y_pos = 50 };
+    MazeSetSprite(&maze);
 
     bool running = true;
     while (running)
@@ -56,6 +60,8 @@ int main(void)
 
         PlayerMove(&player);
         PlayerDisplay(&player, psurface);
+
+        MazeDisplay(&maze, psurface);
 
         DisplayViewport(pwindow);
         SDL_Delay(3); // otherwise CPU goes brrr

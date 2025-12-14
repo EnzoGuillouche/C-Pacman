@@ -24,9 +24,9 @@ void PlayerMove(Player* player) {
 }
 
 void PlayerSetSprite(Player* player, int spriteIndex) {
-    player->psprite = LoadSprite("Bin/test_sprite.txt", spriteIndex);   
+    player->psprite = LoadSprite("Bin/Sprites/pacman.txt", PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_WIDTH, spriteIndex);   
 }
 
 void PlayerDisplay(Player* player, SDL_Surface* psurface) {
-    PlaceSpriteOnViewport(psurface, player->psprite, player->x_pos, player->y_pos);
+    PlaceSpriteOnViewport(psurface, player->psprite, player->x_pos, player->y_pos, PLAYER_SPRITE_HEIGHT, PLAYER_SPRITE_WIDTH);
 }

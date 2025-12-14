@@ -25,11 +25,14 @@ void PlacePixelOnViewport(SDL_Surface *psurface, int x, int y, Uint32 color) {
     SDL_FillRect(psurface, &pixel, color);
 }
 
-void PlaceSpriteOnViewport(SDL_Surface *psurface, const char* psprite, int x, int y) {
-    for (int row = 0; row < SPRITE_HEIGHT; row++) {
-        for (int col = 0; col < SPRITE_WIDTH; col++) {
-            color = GetColorFromSprite(psprite, (SPRITE_WIDTH*row)+col);
-            PlacePixelOnViewport(psurface, x + col, y + row, color);
+void PlaceSpriteOnViewport(SDL_Surface *psurface, const char* psprite, int x, int y, int height, int width) {
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            color = GetColorFromSprite(psprite, (width*row)+col);
+            if (color != 0x000000) { // we don't draw transparent
+                PlacePixelOnViewport(psurface, x + col, y + row, color);
+            }
+            
         }
     }
 }
