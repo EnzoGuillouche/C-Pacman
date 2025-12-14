@@ -74,7 +74,7 @@ int main(void)
         PlayerDisplay(&player, psurface);
 
         DisplayViewport(pwindow);
-        SDL_Delay(3); // otherwise CPU goes brrr
+        SDL_Delay(7); // otherwise CPU goes brrr
     }
 
     // clean up resources before exiting.
