@@ -5,19 +5,26 @@
 #include "player.h"
 #include "maze.h"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 600
+#define SCREEN_WIDTH MAZE_SPRITE_WIDTH*PIXEL_SIZE
+#define SCREEN_HEIGHT MAZE_SPRITE_HEIGHT*PIXEL_SIZE
 
 int main(void)
 {
     SDL_Window* pwindow = CreateWindow("PacSDL", SCREEN_WIDTH, SCREEN_HEIGHT);
     SDL_Surface* psurface = SDL_GetWindowSurface(pwindow);
 
-    Player player = { .x_pos = 100, .y_pos = 100 };
-    PlayerSetSprite(&player, 0); // initial sprite
-
-    Maze maze = { .x_pos = 50, .y_pos = 50 };
+    
+    Maze maze = { 
+        .x_pos = 0, 
+        .y_pos = 0 
+    };
     MazeSetSprite(&maze);
+
+    Player player = { 
+        .x_pos = maze.x_pos+(MAZE_SPRITE_WIDTH/2)-(PLAYER_SPRITE_WIDTH/2), 
+        .y_pos = maze.y_pos+MAZE_SPRITE_HEIGHT-(MAZE_SPRITE_HEIGHT/4)-(PLAYER_SPRITE_HEIGHT/2)+2,
+    };
+    PlayerSetSprite(&player, 0); // initial sprite
 
     bool running = true;
     while (running)
