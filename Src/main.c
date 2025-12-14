@@ -3,16 +3,22 @@
 
 #include "display.h"
 
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 600
+
 int main(void)
 {
-    SDL_Window* pwindow = CreateWindow("PacSDL", 800, 600);
+    SDL_Window* pwindow = CreateWindow("PacSDL", SCREEN_WIDTH, SCREEN_HEIGHT);
     SDL_Surface* psurface = SDL_GetWindowSurface(pwindow);
+
+    int x_pos = 100;
+    int y_pos = 100;
 
     bool running = true;
     while (running)
     {
         SDL_Event e;
-        while (SDL_PollEvent(&e) != 0)
+        while (SDL_PollEvent(&e))
         {
             if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE))
             {
@@ -20,20 +26,23 @@ int main(void)
                 break;
             }
 
-            // PlacePixelOnViewport(psurface, 50, 50, 0xFF0000);
-
-            ClearViewPort(psurface);
-            for (int i = 0; i < 4; i++)
-            {
-                const char* psprite = LoadSprite("Bin/test_sprite.txt", i);
-                if (psprite) {
-                    PlaceSpriteOnViewport(psurface, psprite, 100 + 12*i, 100);
-                    free((void*)psprite);
-                }
-            }
-            
-            DisplayViewport(pwindow);
+            // Input handling
+            // .......... c:
         }
+
+        // Display
+        ClearViewPort(psurface);
+
+        x_pos += 1;
+        if (x_pos > SCREEN_WIDTH) x_pos = 0;
+
+        const char* psprite = LoadSprite("Bin/test_sprite.txt", 0);
+        if (psprite) {
+            PlaceSpriteOnViewport(psurface, psprite, x_pos, y_pos);
+            free((void*)psprite);
+        }
+
+        DisplayViewport(pwindow);
     }
 
     // clean up resources before exiting.

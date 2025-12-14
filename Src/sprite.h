@@ -30,8 +30,6 @@ const char* LoadSprite(const char* filepath, int whichSprite) {
         fread(pbuffer + i, 1, 1, pfile);
     }
 
-    printf("Loaded sprite %d\n", whichSprite);
-
     fclose(pfile);
 
     return pbuffer;
