@@ -5,6 +5,13 @@
 #include "display.h"
 #include "sprite.h"
 
+typedef struct maze_boundaries {
+    char* pboundaries;
+    int width;
+    int height;
+    int ppacman_pos[2];
+} MazeBoundaries;
+
 typedef struct maze {
     int x_pos;
     int y_pos;
